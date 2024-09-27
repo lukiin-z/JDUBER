@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Entrega</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #receberEntrega {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Solicitar Entrega</h1>
+    
+    <!-- Formulário para Solicitar a Entrega -->
+    <form id="solicitarEntrega" action="solicitar_entrega.php" method="POST">
+        <label for="nome_usuario">Nome de Usuário:</label>
+        <input type="text" id="nome_usuario" name="nome_usuario" required>
+        
+        <label for="kit">Escolha o Kit:</label>
+        <select id="kit" name="kit" required>
+            <option value="A">Kit A</option>
+            <option value="B">Kit B</option>
+            <option value="C">Kit C</option>
+        </select>
+        
+        <label for="local_predefinido">Escolha o Local de Entrega:</label>
+        <select id="local_predefinido" name="local_predefinido" required>
+            <option value="baia 3">Baia 3</option>
+            <option value="baia 4">Baia 4</option>
+            <option value="baia 5">Baia 5</option>
+        </select>
+        
+        <button type="submit">Solicitar Entrega</button>
+    </form>
+    
+    <!-- Botão para marcar a entrega como recebida -->
+    <div id="receberEntrega" style="display:none;">
+        <button onclick="receberEntrega(<?php echo $id_entrega; ?>)">Receber Entrega</button>
+    </div>
+    
+    <script>
+        // Função para marcar a entrega como recebida e limpar o campo 'modo'
+        function receberEntrega(id_entrega) {
+            fetch(`receber_entrega.php?id=${id_entrega}`)
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // Exibe uma mensagem de sucesso ou erro
+                document.getElementById('receberEntrega').style.display = 'none'; // Oculta o botão
+            });
+        }
+    </script>
+
+</body>
+</html>

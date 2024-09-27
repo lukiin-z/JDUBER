@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo Montador</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            font-size: 20px;
+        }
+
+        #map-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #map {
+            flex: 1;
+            width: 100%;
+        }
+
+        #solicitar-kit-btn {
+            background-color: black;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        #popup, #delivery-complete-popup, #question-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: black;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            z-index: 1000;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Bem-vindo Montador
+    </header>
+
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="button-container">
+            <button id="solicitar-kit-btn">Solicitar Kit</button>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 JDUBER. Todos os direitos reservados.<br>
+        Termos de Uso | Política de Privacidade
+    </footer>
+
+    <!-- Pop-ups -->
+    <div id="popup">Entregador encontrado, espere até ele chegar até você...</div>
+    <div id="question-popup">
+        Sua entrega deu certo?<br>
+        <button id="sim-btn">Sim</button>
+        <button id="nao-btn">Não</button>
+    </div>
+    <div id="delivery-complete-popup">Obrigado! Sua entrega foi concluída com sucesso!</div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -4,
+            maxZoom: 1
+        });
+
+        var w = 1920, h = 1080;
+        var southWest = map.unproject([0, 0], map.getMaxZoom() - 1);
+        var northEast = map.unproject([w, h], map.getMaxZoom() - 1);
+        var bounds = new L.LatLngBounds(southWest, northEast);
+
+        var image = L.imageOverlay('assets/imagens/mapaJDB.png', bounds).addTo(map);
+        map.fitBounds(bounds);
+        map.setZoom(-3);
+
+        // Função para criar um marcador
+        function createCustomMarker(x, y, color) {
+            var markerHtml = '<div class="custom-marker" style="background-color:' + color + '; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>';
+            return L.marker(map.unproject([x, y], map.getMaxZoom() - 1), {
+                icon: L.divIcon({
+                    className: 'custom-icon',
+                    html: markerHtml,
+                    iconSize: [12, 12],
+                    iconAnchor: [6, 6]
+                })
+            }).addTo(map);
+        }
+
+        // Adicionando zonas proibidas
+        var prohibitedZones = [
+            { southWest: [10, 20], northEast: [500, 290] },
+            { southWest: [520, 20], northEast: [650, 290] }
+        ];
+
+        prohibitedZones.forEach(function(zone) {
+            var southWest = map.unproject([zone.southWest[0], zone.southWest[1]], map.getMaxZoom() - 1);
+            var northEast = map.unproject([zone.northEast[0], zone.northEast[1]], map.getMaxZoom() - 1);
+            var bounds = [southWest, northEast];
+            L.rectangle(bounds, { color: 'red', weight: 1 }).addTo(map);
+        });
+
+        // Coordenadas da bolinha azul (local de entrega)
+        var blueCoordinates = { x: 510, y: 100 };
+        var blueMarker = createCustomMarker(blueCoordinates.x, blueCoordinates.y, 'blue');
+
+        // Coordenadas da bolinha verde (entregador), sempre visível no mapa
+        var greenCoordinate = { x: 300, y: 300 };
+        var greenMarker = createCustomMarker(greenCoordinate.x, greenCoordinate.y, 'green'); // Criado desde o início
+
+        // Função para verificar se a bolinha está dentro de uma zona proibida
+        function isInsideProhibitedZone(x, y) {
+            for (var i = 0; i < prohibitedZones.length; i++) {
+                var zone = prohibitedZones[i];
+                var southWest = map.unproject([zone.southWest[0], zone.southWest[1]], map.getMaxZoom() - 1);
+                var northEast = map.unproject([zone.northEast[0], zone.northEast[1]], map.getMaxZoom() - 1);
+                var bounds = L.latLngBounds(southWest, northEast);
+                var point = map.unproject([x, y], map.getMaxZoom() - 1);
+
+                if (bounds.contains(point)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Algoritmo A* para encontrar o caminho evitando zonas proibidas
+        function aStar(start, goal, zones) {
+            var openSet = [start];
+            var closedSet = [];
+            var cameFrom = {};
+            var maxIterations = 1000;
+            var iterationCount = 0;
+
+            function heuristic(a, b) {
+                return Math.abs(a.lat - b.lat) + Math.abs(a.lng - b.lng);
+            }
+
+            while (openSet.length > 0 && iterationCount < maxIterations) {
+                iterationCount++;
+                var current = openSet.reduce((prev, curr) => heuristic(curr, goal) < heuristic(prev, goal) ? curr : prev);
+
+                if (Math.abs(current.lat - goal.lat) < 0.01 && Math.abs(current.lng - goal.lng) < 0.01) {
+                    var path = [];
+                    while (cameFrom[current.lat + ',' + current.lng]) {
+                        path.push(current);
+                        current = cameFrom[current.lat + ',' + current.lng];
+                    }
+                    return path.reverse();
+                }
+
+                openSet = openSet.filter(node => node !== current);
+                closedSet.push(current);
+
+                var neighbors = [
+                    { lat: current.lat + 1, lng: current.lng },  // Cima
+                    { lat: current.lat - 1, lng: current.lng },  // Baixo
+                    { lat: current.lat, lng: current.lng + 1 },  // Direita
+                    { lat: current.lat, lng: current.lng - 1 }   // Esquerda
+                ];
+
+                for (var neighbor of neighbors) {
+                    var neighborPoint = L.latLng(neighbor.lat, neighbor.lng);
+
+                    if (isInsideProhibitedZone(neighborPoint.lat, neighborPoint.lng) || closedSet.some(node => node.lat === neighbor.lat && node.lng === neighbor.lng)) {
+                        continue;
+                    }
+
+                    if (!openSet.some(node => node.lat === neighbor.lat && node.lng === neighbor.lng)) {
+                        cameFrom[neighbor.lat + ',' + neighbor.lng] = current;
+                        openSet.push(neighbor);
+                    }
+                }
+            }
+
+            return null; // Se nenhum caminho for encontrado
+        }
+
+        // Função para animar o marcador ao longo do caminho
+        function animateMarkerToDestination(marker, path, duration) {
+            var index = 0;
+            var steps = path.length;
+            var stepDuration = duration / steps;
+
+            function moveMarker() {
+                if (index < steps) {
+                    marker.setLatLng(path[index]);
+                    index++;
+                    setTimeout(moveMarker, stepDuration);
+                }
+            }
+
+            moveMarker();
+        }
+
+        // Função para mover a bolinha verde até a bolinha azul, evitando zonas proibidas
+        function findPathAndAnimate() {
+            var start = greenMarker.getLatLng();
+            var goal = blueMarker.getLatLng();
+            var path = aStar(start, goal, prohibitedZones);
+
+            if (path) {
+                var fullPath = [start].concat(path).concat([goal]);
+                animateMarkerToDestination(greenMarker, fullPath, 5000); // Duração de 5 segundos para a animação
+            } else {
+                alert('Nenhum caminho encontrado!');
+            }
+        }
+
+        // Evento para o botão "Solicitar Kit"
+        document.getElementById('solicitar-kit-btn').addEventListener('click', function() {
+            var kit = prompt("Qual kit você precisa?");
+            if (!kit) return;
+
+            var baia = prompt("Em qual baia você está trabalhando?");
+            if (!baia) return;
+
+            // Mostrar o pop-up de "Entregador encontrado"
+            var popup = document.getElementById('popup');
+            popup.style.display = 'block';
+
+            setTimeout(function() {
+                popup.style.display = 'none';
+                findPathAndAnimate(); // Iniciar a animação da bolinha verde após 3 segundos
+            }, 3000);
+        });
+
+        // Evento para o botão "Sim"
+        document.getElementById('sim-btn').addEventListener('click', function() {
+            document.getElementById('question-popup').style.display = 'none';
+            document.getElementById('delivery-complete-popup').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('delivery-complete-popup').style.display = 'none';
+            }, 3000); // Mostrar a mensagem por 3 segundos
+        });
+
+        // Evento para o botão "Não"
+        document.getElementById('nao-btn').addEventListener('click', function() {
+            document.getElementById('question-popup').style.display = 'none';
+            alert("Vamos tentar novamente!");
+        });
+    </script>
+</body>
+</html>
