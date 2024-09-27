@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação Operador - Mapa com IA (A*)</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            display: block;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+        #rebocador {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            z-index: 5;
+        }
+        .montador {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: yellow;
+            z-index: 5;
+        }
+        .kit {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+
+<div id="buttons">
+  <button id="montador1" onclick="chamarMontador(1)">MONTADOR 1</button>
+  <button id="montador2" onclick="chamarMontador(2)">MONTADOR 2</button>
+  <button id="montador3" onclick="chamarMontador(3)">MONTADOR 3</button>
+</div>
+
+<canvas id="mapCanvas"></canvas>
+<div id="rebocador"></div>
+
+<script>
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'assets/imagens/mapaJDB.png'; // Substitua pelo caminho correto
+
+    const mapaOriginalWidth = 1920;
+    const mapaOriginalHeight = 1080;
+    const escala = 0.75;
+    const kitSize = 20; // Tamanho dos kits
+    const rebocador = { x: 0, y: 0, velocidade: 5 };
+
+    // Ajustar o tamanho do canvas
+    canvas.width = mapaOriginalWidth * escala;
+    canvas.height = mapaOriginalHeight * escala;
+
+    const carrosKits = [];
+    const montadores = [
+        { id: 1, x: 0, y: 0, element: null }, // Montador 1 será posicionado automaticamente
+        { id: 2, x: 0, y: 0, element: null }, // Montador 2 será posicionado automaticamente
+        { id: 3, x: 0, y: 0, element: null }  // Montador 3 será posicionado automaticamente
+    ];
+
+    let imageData; // Variável para armazenar os dados da imagem
+    let mapaPermitido = []; // Matriz de áreas permitidas (brancas)
+
+    // Função para carregar a imagem e desenhá-la no canvas
+    image.onload = function() {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        imageData = ctx.getImageData(0, 0, canvas.width, canvas.height); // Armazenar os dados da imagem
+        mapaPermitido = criarMatrizPermitida(); // Gerar a matriz de áreas permitidas
+        inicializarRebocador(); // Inicializar o rebocador após o carregamento da imagem
+        randomizarKits(); // Colocar os kits no mapa
+        posicionarMontadores(); // Posicionar os montadores
+    };
+
+    // Função para criar uma matriz de áreas permitidas (brancas) e proibidas (pretas)
+    function criarMatrizPermitida() {
+        const matriz = [];
+
+        for (let y = 0; y < canvas.height; y++) {
+            const linha = [];
+            for (let x = 0; x < canvas.width; x++) {
+                const index = (y * canvas.width + x) * 4;
+                const r = imageData.data[index];
+                const g = imageData.data[index + 1];
+                const b = imageData.data[index + 2];
+                // Se for branco (255, 255, 255), é permitido
+                linha.push(r === 255 && g === 255 && b === 255);
+            }
+            matriz.push(linha);
+        }
+
+        return matriz;
+    }
+
+    // Função para verificar se uma posição é permitida
+    function posicaoPermitida(x, y) {
+        if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return false;
+        return mapaPermitido[y][x];
+    }
+
+    // Função para inicializar o rebocador no centro da área permitida
+    function inicializarRebocador() {
+        const meioX = Math.floor(canvas.width / 2);
+        const meioY = Math.floor(canvas.height / 2);
+
+        if (posicaoPermitida(meioX, meioY)) {
+            rebocador.x = meioX;
+            rebocador.y = meioY;
+        } else {
+            moverParaPosicaoPermitida(meioX, meioY);
+        }
+
+        const rebocadorElement = document.getElementById('rebocador');
+        rebocadorElement.style.left = `${rebocador.x}px`;
+        rebocadorElement.style.top = `${rebocador.y}px`;
+        console.log(`Rebocador inicializado em: ${rebocador.x}, ${rebocador.y}`);
+    }
+
+    // Função para randomizar a posição dos carros kits
+    function randomizarKits() {
+        const distanciaMinima = 50; // Distância mínima entre os carros kits
+        for (let i = 0; i < 4; i++) {
+            let x, y;
+            let posicaoValida;
+
+            do {
+                posicaoValida = true;
+                x = Math.floor(Math.random() * (canvas.width - kitSize)); // Garantir que o kit inteiro cabe na tela
+                y = Math.floor(Math.random() * (canvas.height - kitSize));
+
+                // Garantir que a posição está nas áreas permitidas
+                if (!posicaoPermitida(x, y)) {
+                    posicaoValida = false;
+                }
+
+                // Garantir que não está muito próximo de outro kit
+                carrosKits.forEach(kit => {
+                    const distancia = Math.hypot(kit.x - x, kit.y - y);
+                    if (distancia < distanciaMinima) {
+                        posicaoValida = false;
+                    }
+                });
+
+            } while (!posicaoValida);
+
+            carrosKits.push({ x, y });
+        }
+
+        desenharKits(carrosKits);
+    }
+
+    // Função para desenhar os carros kits
+    function desenharKits(carrosKitsPosicoes) {
+        carrosKitsPosicoes.forEach(kit => {
+            const kitElement = document.createElement('div');
+            kitElement.classList.add('kit');
+            kitElement.style.left = `${kit.x}px`;
+            kitElement.style.top = `${kit.y}px`;
+            document.body.appendChild(kitElement);
+        });
+    }
+
+    // Implementação do Algoritmo A* para encontrar o caminho
+    function aStar(startX, startY, goalX, goalY) {
+        // Função heurística de Manhattan
+        function heuristica(a, b) {
+            return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+        }
+
+        const start = { x: startX, y: startY, g: 0, h: heuristica({ x: startX, y: startY }, { x: goalX, y: goalY }), f: 0, parent: null };
+        const goal = { x: goalX, y: goalY };
+        start.f = start.g + start.h;
+
+        const openList = [start];
+        const closedList = [];
+
+        while (openList.length > 0) {
+            // Seleciona o nó com o menor valor de f
+            let currentNode = openList.reduce((prev, curr) => (prev.f < curr.f ? prev : curr));
+
+            // Se o objetivo for alcançado
+            if (currentNode.x === goal.x && currentNode.y === goal.y) {
+                const path = [];
+                while (currentNode) {
+                    path.push({ x: currentNode.x, y: currentNode.y });
+                    currentNode = currentNode.parent;
+                }
+                return path.reverse(); // Retorna o caminho da origem até o destino
+            }
+
+            // Move o nó atual da lista aberta para a fechada
+            openList.splice(openList.indexOf(currentNode), 1);
+            closedList.push(currentNode);
+
+            // Explora os vizinhos (cima, baixo, esquerda, direita)
+            const vizinhos = [
+                { x: currentNode.x + 1, y: currentNode.y },
+                { x: currentNode.x - 1, y: currentNode.y },
+                { x: currentNode.x, y: currentNode.y + 1 },
+                { x: currentNode.x, y: currentNode.y - 1 }
+            ];
+
+            for (let vizinho of vizinhos) {
+                // Verifica se o vizinho é permitido
+                if (!posicaoPermitida(vizinho.x, vizinho.y) || closedList.find(n => n.x === vizinho.x && n.y === vizinho.y)) {
+                    continue;
+                }
+
+                const gScore = currentNode.g + 1;
+                let vizinhoNode = openList.find(n => n.x === vizinho.x && n.y === vizinho.y);
+
+                if (!vizinhoNode) {
+                    vizinhoNode = { ...vizinho, g: gScore, h: heuristica(vizinho, goal), f: gScore + heuristica(vizinho, goal), parent: currentNode };
+                    openList.push(vizinhoNode);
+                } else if (gScore < vizinhoNode.g) {
+                    vizinhoNode.g = gScore;
+                    vizinhoNode.f = vizinhoNode.g + vizinhoNode.h;
+                    vizinhoNode.parent = currentNode;
+                }
+            }
+        }
+
+        return []; // Se nenhum caminho for encontrado
+    }
+
+    // Função para mover o rebocador com A* Pathfinding
+    function moverRebocadorAStar(destX, destY) {
+        const caminho = aStar(rebocador.x, rebocador.y, destX, destY);
+
+        if (caminho.length === 0) {
+            console.log("Nenhum caminho encontrado!");
+            return;
+        }
+
+        let index = 0;
+        const interval = setInterval(() => {
+            if (index >= caminho.length) {
+                clearInterval(interval);
+                console.log("Rebocador chegou ao destino.");
+                return;
+            }
+
+            const nextStep = caminho[index];
+            rebocador.x = nextStep.x;
+            rebocador.y = nextStep.y;
+
+            const rebocadorElement = document.getElementById('rebocador');
+            rebocadorElement.style.left = `${rebocador.x}px`;
+            rebocadorElement.style.top = `${rebocador.y}px`;
+
+            index++;
+        }, 100);
+    }
+
+    // Função para chamar o montador e iniciar a movimentação do rebocador
+    function chamarMontador(montadorId) {
+        const montador = montadores.find(m => m.id === montadorId);
+        moverRebocadorAStar(montador.x, montador.y);
+    }
+
+    // Função para posicionar os montadores
+    function posicionarMontadores() {
+        montadores.forEach(montador => {
+            montador.x = Math.floor(Math.random() * canvas.width);
+            montador.y = Math.floor(Math.random() * canvas.height);
+            const montadorElement = document.createElement('div');
+            montadorElement.classList.add('montador');
+            montadorElement.style.left = `${montador.x}px`;
+            montadorElement.style.top = `${montador.y}px`;
+            document.body.appendChild(montadorElement);
+        });
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Outros elementos do cabeçalho -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações de Conta</title>
+    <link rel="stylesheet" href="assets/configuracoes.css?v=2.0"> <!-- Mudança de versão para evitar cache -->
+</head>
+<body class="config-page">
+
+    <!-- Cabeçalho melhorado -->
+    <header class="navbar">
+        <a href="#" class="navbar-logo">JD Uber</a>
+        <ul class="navbar-menu">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </header>
+
+    <!-- Container do formulário centralizado -->
+    <div class="container">
+        <h2>Configurações de Conta</h2>
+        <form id="configForm">
+            <div class="input-container">
+                <input type="text" id="name" name="name" placeholder="Atualizar Nome" required>
+            </div>
+            <div class="input-container">
+                <input type="email" id="email" name="email" placeholder="Atualizar E-mail" required>
+            </div>
+            <button type="submit" class="btn">Salvar Alterações</button>
+        </form>
+        <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 JD Uber. Todos os direitos reservados.</p>
+        <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a>
+    </footer>
+
+    <!-- Botão de alternância de tema -->
+    <button id="toggle-theme" class="toggle-theme-btn">Alternar Tema</button>
+
+    <!-- Carregar o JavaScript no final -->
+    <script src="assets/configuracoes.js"></script>
+</body>
+</html>

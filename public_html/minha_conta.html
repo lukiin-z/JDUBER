@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #006400;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 24px;
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .info h2 {
+            color: #006400;
+        }
+
+        .info p {
+            margin: 5px 0;
+        }
+
+        footer {
+            background-color: #006400;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        JDUBER - Minha Conta
+    </header>
+
+    <div class="container">
+        <div class="info">
+            <h2>Informações do Usuário</h2>
+            <p><strong>Nome:</strong> <span id="userName">Carregando...</span></p>
+            <p><strong>E-mail:</strong> <span id="userEmail">Carregando...</span></p>
+            <p><strong>Função:</strong> <span id="userRole">Carregando...</span></p>
+        </div>
+    </div>
+
+    <footer>
+        JDUBER &copy; 2024
+    </footer>
+
+    <script>
+        // Função para buscar os dados do usuário
+        async function fetchUserData() {
+            // Verifica se o token está presente no localStorage
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Token JWT não encontrado. Redirecionando para o login.');
+                window.location.href = 'login.html'; // Redireciona para a página de login
+                return;
+            }
+
+            try {
+                // Faz a requisição para obter os dados do usuário
+                const response = await fetch('/backend_php/getUserInfo.php', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token // Token JWT armazenado localmente
+                    }
+                });
+
+                // Verifica a resposta do servidor
+                if (response.ok) {
+                    const userData = await response.json();
+                    // Atualiza os elementos na página com as informações do usuário
+                    document.getElementById('userName').textContent = userData.name || 'Nome não disponível';
+                    document.getElementById('userEmail').textContent = userData.email || 'E-mail não disponível';
+                    document.getElementById('userRole').textContent = userData.role || 'Função não disponível';
+                } else {
+                    const errorData = await response.json();
+                    console.error('Erro ao carregar informações do usuário:', errorData.message);
+                    alert('Erro: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
+            }
+        }
+
+        // Chama a função para buscar os dados do usuário ao carregar a página
+        window.onload = fetchUserData;
+    </script>
+
+</body>
+</html>

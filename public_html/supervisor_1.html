@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo Supervisor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            font-size: 20px;
+        }
+
+        #map-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #map {
+            flex: 1;
+            width: 100%;
+        }
+
+        .custom-marker-green, .custom-marker-blue {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .custom-marker-green {
+            background-color: green;
+        }
+
+        .custom-marker-blue {
+            background-color: blue;
+        }
+
+        .custom-marker:hover::after {
+            content: attr(data-label);
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            padding: 5px;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Bem-vindo Supervisor
+    </header>
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -4,
+            maxZoom: 1
+        });
+
+        var w = 1920, h = 1080;
+        var southWest = map.unproject([0, 0], map.getMaxZoom() - 1);
+        var northEast = map.unproject([w, h], map.getMaxZoom() - 1);
+        var bounds = new L.LatLngBounds(southWest, northEast);
+
+        var image = L.imageOverlay('assets/imagens/mapaJDB.png', bounds).addTo(map);
+        map.fitBounds(bounds);
+        map.setZoom(-3);
+
+        // Função para criar um marcador verde
+        function createCustomMarker(x, y, label) {
+            var markerHtml = '<div class="custom-marker custom-marker-green" data-label="Entregador ' + label + '"></div>';
+            return L.marker(map.unproject([x, y], map.getMaxZoom() - 1), {
+                icon: L.divIcon({
+                    className: 'custom-icon',
+                    html: markerHtml,
+                    iconSize: [12, 12],
+                    iconAnchor: [6, 6]
+                })
+            });
+        }
+
+        // Coordenadas de todas as bolinhas (todas são verdes agora)
+        var greenCoordinates = [
+            { x: 300, y: 300, label: getRandomLetter() },
+            { x: 510, y: 100, label: getRandomLetter() },
+            { x: 510, y: 200, label: getRandomLetter() },
+            { x: 960, y: 300, label: getRandomLetter() },
+            { x: 1390, y: 400, label: getRandomLetter() }
+        ];
+
+        // Cria as bolinhas verdes
+        greenCoordinates.forEach(function(coord) {
+            var marker = createCustomMarker(coord.x, coord.y, coord.label).addTo(map);
+        });
+
+        // Movimentação das bolinhas azuis em Y
+        var blueCoordinates = [
+            { x: 510, y: 100 },
+            { x: 960, y: 100 }
+        ];
+
+        var blueMarkers = blueCoordinates.map(function(coord) {
+            return createBlueMarker(coord.x, coord.y);
+        });
+
+        function createBlueMarker(x, y) {
+            var markerHtml = '<div class="custom-marker custom-marker-blue"></div>';
+            return L.marker(map.unproject([x, y], map.getMaxZoom() - 1), {
+                icon: L.divIcon({
+                    className: 'custom-icon',
+                    html: markerHtml,
+                    iconSize: [12, 12],
+                    iconAnchor: [6, 6]
+                })
+            }).addTo(map);
+        }
+
+        // Função para mover as bolinhas verdes em X
+        var greenMovableMarker = createCustomMarker(300, 300, 'G').addTo(map);
+        var greenX = 300;
+
+        function moveGreenMarkerX() {
+            greenX += 1; // Movendo mais devagar (1 unidade por vez)
+            greenMovableMarker.setLatLng(map.unproject([greenX, 300], map.getMaxZoom() - 1));
+            if (greenX < 1000) {
+                setTimeout(moveGreenMarkerX, 100); // 100ms por incremento para deixar o movimento mais suave
+            }
+        }
+
+        moveGreenMarkerX();
+
+        // Função para mover as bolinhas azuis ao longo de Y
+        var blueY1 = 100;
+        var blueY2 = 100;
+
+        function moveBlueMarkersY() {
+            blueY1 += 1; // Movendo mais devagar (1 unidade por vez)
+            blueY2 += 1; // Movendo mais devagar (1 unidade por vez)
+
+            blueMarkers[0].setLatLng(map.unproject([510, blueY1], map.getMaxZoom() - 1));
+            blueMarkers[1].setLatLng(map.unproject([960, blueY2], map.getMaxZoom() - 1));
+
+            if (blueY1 < 1000 && blueY2 < 1000) {
+                setTimeout(moveBlueMarkersY, 100); // 100ms por incremento para deixar o movimento mais suave
+            }
+        }
+
+        moveBlueMarkersY();
+
+        // Função para gerar uma letra aleatória
+        function getRandomLetter() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+    </script>
+</body>
+</html>

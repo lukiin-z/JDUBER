@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - JDUBER</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #fff;
+            color: #333;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        header {
+            background-color: #000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo-container img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease; /* Transição suave */
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .form-box {
+            background-color: #fff;
+            padding: 0;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .form-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .form-image img {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out; /* Animação de transição suave */
+        }
+
+        .form-content {
+            flex: 2;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: inherit;
+            text-align: center;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            font-size: 16px;
+            text-align: center;
+            background-color: #e6e6e6;
+        }
+
+        button {
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        footer {
+            background-color: #000;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-button {
+            background-color: #000;
+            padding: 10px;
+            border-radius: 30px;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .back-button:hover {
+            background-color: #444;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JDUBER - Registro</h1>
+
+        <!-- Imagem de Voltar no canto superior esquerdo -->
+        <div class="logo-container">
+            <a href="#" onclick="fadeToIndex()">
+                <img src="assets/imagens/voltar.png" alt="Voltar">
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-box">
+            <!-- Coluna da Imagem -->
+            <div class="form-image">
+                <img id="userAvatar" src="assets/imagens/usuario.png" alt="Avatar do Usuário">
+            </div>
+
+            <!-- Coluna do Formulário -->
+            <div class="form-content">
+                <h2>Crie sua Conta</h2>
+                <form id="registerForm">
+                    <input type="text" id="username" name="username" placeholder="Nome de Usuário" required>
+                    <input type="text" id="name" name="name" placeholder="Nome" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="password" id="password" name="password" placeholder="Senha" required>
+                    <span id="passwordError" class="error-message">A senha deve ter pelo menos 8 caracteres, incluindo letras e números.</span>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme a Senha" required>
+                    <span id="confirmPasswordError" class="error-message">As senhas não coincidem.</span>
+
+                    <!-- Dropdown de seleção de função -->
+                    <select name="role" id="role" required>
+                        <option value="">Escolha sua Função</option>
+                        <option value="montador">Montador</option>
+                        <option value="operador">Operador</option>
+                        <option value="supervisor">Supervisor</option>
+                    </select>
+
+                    <button type="submit">Registrar</button>
+                </form>
+
+                <div class="back-button" id="backButton">Voltar para Login</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 JDUBER. Todos os direitos reservados.</p>
+        <p><a href="termos.html">Termos de Uso</a> | <a href="privacidade.html">Política de Privacidade</a></p>
+    </footer>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const roleSelect = document.getElementById('role');
+        const userAvatar = document.getElementById('userAvatar');
+        const backButton = document.getElementById('backButton');
+
+        // Função para aplicar transição de fade ao mudar a imagem do avatar
+        function changeAvatar(imageSrc) {
+            userAvatar.style.opacity = 0; // Inicia o fade-out
+            setTimeout(() => {
+                userAvatar.src = imageSrc;
+                userAvatar.style.opacity = 1; // Aplica o fade-in após a mudança da imagem
+            }, 500); // Define o tempo da animação
+        }
+
+        // Função para trocar a imagem com base na função selecionada
+        roleSelect.addEventListener('change', function () {
+            const selectedRole = roleSelect.value;
+
+            // Mudar a imagem com base na função
+            switch (selectedRole) {
+                case 'montador':
+                    changeAvatar('assets/imagens/montador.png');
+                    break;
+                case 'operador':
+                    changeAvatar('assets/imagens/operador.png');
+                    break;
+                case 'supervisor':
+                    changeAvatar('assets/imagens/supervisor.png');
+                    break;
+                default:
+                    changeAvatar('assets/imagens/usuario.png');
+                    break;
+            }
+        });
+
+        // Função para redirecionar para index.html com animação suave
+        function fadeToIndex() {
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.style.opacity = 0;
+
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 500);
+        }
+
+        // Função para redirecionar para login.html com animação suave
+        backButton.addEventListener('click', function() {
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.style.opacity = 0;
+
+            setTimeout(function() {
+                window.location.href = 'login.html';
+            }, 500);
+        });
+
+        // Validação de senhas
+        function isValidPassword(password) {
+            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return passwordRegex.test(password);
+        }
+
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value.trim();
+            if (!isValidPassword(password)) {
+                passwordInput.classList.add('error-border');
+                passwordError.style.display = 'block';
+            } else {
+                passwordInput.classList.remove('error-border');
+                passwordError.style.display = 'none';
+            }
+        });
+
+        confirmPasswordInput.addEventListener('input', function () {
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+            if (password !== confirmPassword) {
+                confirmPasswordInput.classList.add('error-border');
+                confirmPasswordError.style.display = 'block';
+            } else {
+                confirmPasswordInput.classList.remove('error-border');
+                confirmPasswordError.style.display = 'none';
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+            const role = document.querySelector('select[name="role"]').value;
+
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem.');
+                return;
+            }
+
+            if (!isValidPassword(password)) {
+                alert('A senha deve ter pelo menos 8 caracteres e conter letras e números.');
+                return;
+            }
+
+            if (!username || !name || !email || !password || !role) {
+                alert('Preencha todos os campos.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/backend_php/register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, name, email, password, role })
+                });
+
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    alert('Cadastro realizado com sucesso!');
+                    
+                    // Transição suave ao redirecionar para login.html após o registro
+                    document.body.style.transition = 'opacity 0.5s ease-in-out';
+                    document.body.style.opacity = 0;
+                    setTimeout(function() {
+                        window.location.href = 'login.html';
+                    }, 500);
+                } else {
+                    alert(data.message || 'Erro ao registrar.');
+                }
+            } catch (error) {
+                console.error('Erro no registro:', error);
+                alert('Erro ao conectar com o servidor.');
+            }
+        });
+    </script>
+</body>
+</html>
