@@ -1,0 +1,231 @@
+/* Estilos gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: url('assets/imagens/fundo.jpg') no-repeat center center fixed;
+    background-color: #f0f0f0; /* Cor de fundo caso a imagem não carregue */
+    background-size: cover;
+    background-attachment: fixed;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px; /* Melhor espaçamento entre letras */
+}
+
+/* Navbar */
+.navbar {
+    background-color: #000;
+    padding: 15px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 1.5em;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar-menu {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+.navbar-menu a:hover {
+    color: #f7c600;
+    transition: color 0.3s ease;
+}
+
+/* Container */
+.container {
+    text-align: center;
+    margin-top: 150px; /* Mais espaço entre o conteúdo e a navbar */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botão COMECAR maior */
+button.btn-large {
+    background: linear-gradient(135deg, #f7c600, #d4a800); /* Gradiente no botão */
+    color: #000;
+    padding: 30px 60px; /* Aumenta o espaço interno (padding) */
+    font-size: 2.5em; /* Aumenta o tamanho da fonte */
+    border: none;
+    border-radius: 10px; /* Bordas arredondadas */
+    cursor: pointer;
+    margin: 20px auto; /* Centraliza o botão */
+    width: 100%;
+    max-width: 600px; /* Aumenta a largura máxima */
+    display: block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+button.btn-large:hover {
+    background: linear-gradient(135deg, #d4a800, #f7c600); /* Inverte o gradiente no hover */
+    color: #fff;
+    transform: translateY(-5px);
+}
+
+button.btn-large:active {
+    transform: translateY(0);
+}
+
+/* Estilo do botão de alternar modo escuro */
+.dark-mode-container {
+    margin-top: 20px; /* Espaço entre o botão "COMECAR" e o botão de alternância */
+    text-align: center;
+}
+
+button.toggle-dark-mode {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.toggle-dark-mode:hover {
+    background-color: #555;
+    color: #f7c600;
+}
+
+button.toggle-dark-mode:active {
+    transform: translateY(2px);
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    max-width: 50%;
+    margin: 0 auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    border-radius: 5px;
+    transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.toast.success {
+    background-color: #4CAF50;
+}
+
+.toast.error {
+    background-color: #f44336;
+}
+
+/* Modo escuro aprimorado */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode h1 {
+    color: #f0f0f0; /* Texto mais claro para contraste */
+}
+
+body.dark-mode .navbar {
+    background-color: #1f1f1f;
+}
+
+body.dark-mode button.btn-large {
+    background: linear-gradient(135deg, #0f4d24, #1b5e20); /* Verde escuro no modo escuro */
+    color: #f7c600;
+}
+
+body.dark-mode button.btn-large:hover {
+    background: linear-gradient(135deg, #1b5e20, #0f4d24); /* Hover no modo escuro */
+    color: #fff;
+}
+
+body.dark-mode .progress-bar {
+    background-color: #b0b0b0; /* Tom mais claro para a barra de progresso */
+}
+
+/* Barra de progresso */
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 20px auto;
+    height: 10px;
+    max-width: 500px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    button.btn-large {
+        padding: 10px 20px;
+        font-size: 1.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+}

@@ -1,0 +1,46 @@
+/* supervisor_page.css */
+
+/* Estilização básica para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilização do cabeçalho */
+header {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Estilização do mapa */
+#map {
+    width: 100%;
+    height: 600px;
+    margin-top: 20px;
+}
+
+/* Estilização do rodapé */
+footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #map {
+        height: 400px;
+    }
+}
