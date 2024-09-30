@@ -40,6 +40,27 @@ Montadores podem solicitar kits que são enviados aos operadores.
 Os operadores recebem as solicitações e realizam as entregas de kits.
 Recuperação de Senha:
 Sistema de recuperação de senha implementado via SMTP, permitindo que os usuários redefinam suas senhas de maneira segura.
+Imagens do site funcionando:
+
+![Captura_de_tela_2024-09-30_084109](https://github.com/user-attachments/assets/ee61cfea-d762-4453-a948-21f67677a715)
+![Captura_de_tela_2024-09-30_083948](https://github.com/user-attachments/assets/1b441dbe-8113-4d9c-956b-596eabe44a14)
+![Captura_de_tela_2024-09-30_083852](https://github.com/user-attachments/assets/ac5a0dba-8147-4be9-8d94-2025bb5239a6)
+![Captura_de_tela_2024-09-30_082718](https://github.com/user-attachments/assets/3d7e6e2f-a876-4cdd-a26d-b0b353c24236)
+![Captura_de_tela_2024-09-30_082700](https://github.com/user-attachments/assets/d7d21742-3498-40fe-8f57-6bb430c5e512)
+![Captura_de_tela_2024-09-30_082640](https://github.com/user-attachments/assets/c7e65916-e750-4aff-b0f7-af49484d7bc6)
+![Captura_de_tela_2024-09-30_082619](https://github.com/user-attachments/assets/811448fc-55ae-471c-afff-1173e9f34043)
+![Captura_de_tela_2024-09-30_082541](https://github.com/user-attachments/assets/3204694e-ba27-4b4c-8834-6eff3c70586f)
+![Captura_de_tela_2024-09-30_082523](https://github.com/user-attachments/assets/bddd4290-ffbd-48b4-9664-e8f26e8bb82d)
+![Captura_de_tela_2024-09-30_082458](https://github.com/user-attachments/assets/288b2461-c153-460f-9c9a-f223a40f228b)
+![Captura_de_tela_2024-09-30_082443](https://github.com/user-attachments/assets/91a32411-684a-4c8b-b4d8-f341374c71a7)
+![Captura_de_tela_2024-09-30_082422](https://github.com/user-attachments/assets/7c369ec1-af29-4395-9a5f-918deedb882d)
+
+Imagens do prototipo ESP32 e banco de dados:
+
+![Captura_de_tela_2024-09-30_090436](https://github.com/user-attachments/assets/c09d51c3-e9f1-408a-a003-3af42fc74e93)
+![Captura_de_tela_2024-09-30_090348](https://github.com/user-attachments/assets/d83731db-19d0-4838-b79e-01552f40d893)
+![Captura_de_tela_2024-09-30_085904](https://github.com/user-attachments/assets/4382f03e-7a11-4532-8e0a-60fe8942b7b7)
+![Captura_de_tela_2024-09-30_085521](https://github.com/user-attachments/assets/e453e0ac-7a9e-4e20-a1e3-ce613214bdb6)
 
 Design
 Adotamos um design minimalista inspirado nas cores da Uber, focando em um esquema de cores preto e branco, que reflete a simplicidade e elegância do projeto. A interface é responsiva, garantindo uma experiência de uso agradável tanto em desktops quanto em dispositivos móveis.
