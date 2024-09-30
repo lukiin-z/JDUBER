@@ -32,6 +32,11 @@ JavaScript (Frontend): Gerenciamento da lógica de interação dos usuários com
 HTML/CSS: Estrutura e estilo das páginas web.
 SMTP (Hostinger): Para envio de e-mails de recuperação de senha.
 
+Diagrama de blocos que representa nossa arquitetura:
+
+![DIAGRAMA IND4 0 drawio](https://github.com/user-attachments/assets/217c3e4e-eba4-4659-b6fb-0a32f54ea2ad)
+
+
 Páginas e Funcionalidades
 
 Login e Registro:
@@ -97,7 +102,9 @@ Ele inclui:
 
 Frontend: Todos os arquivos HTML, CSS e JavaScript necessários para o funcionamento do site.
 Backend: Os scripts PHP que fazem a lógica de comunicação com o ESP32 e o banco de dados.
+
 Vídeo de Demonstração
+
 Assista à demonstração do projeto em funcionamento no vídeo abaixo:
 
 Link para o vídeo no YouTube
