@@ -109,6 +109,8 @@ Assista à demonstração do projeto em funcionamento no vídeo abaixo:
 
 Link para o vídeo no YouTube
 
+https://www.youtube.com/watch?v=jGpozfe2yeo
+
 Conclusão
 
 O projeto JDUBER é um passo significativo na implementação de tecnologias da Indústria 4.0 dentro da John Deere. Através da automação da logística interna e do uso de IoT, esperamos melhorar a eficiência e a transparência das operações dentro da planta, além de facilitar o dia a dia dos operadores, montadores e supervisores.
