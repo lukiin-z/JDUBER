@@ -1,12 +1,27 @@
 # JDUBER
 
-## Introdução
+## Sumário
+- [Introdução](#introdução)
+- [Objetivos](#objetivos)
+- [Desenvolvimento](#desenvolvimento)
+- [Páginas e Funcionalidades](#páginas-e-funcionalidades)
+- [Imagens do Projeto](#imagens-do-projeto)
+- [Design](#design)
+- [Resultados](#resultados)
+- [Código Fonte](#código-fonte)
+- [Vídeo de Demonstração](#vídeo-de-demonstração)
+- [Testes de Desempenho](#testes-de-desempenho)
+- [Conclusão](#conclusão)
+
+---
+
+## 🚀 Introdução
 
 O projeto **JDUBER** foi desenvolvido como parte de uma iniciativa para melhorar a eficiência na movimentação de kits dentro das instalações da **John Deere**. O foco está na aplicação dos conceitos da **Indústria 4.0**, especialmente IoT, para automatizar e monitorar a logística interna usando dispositivos ESP32 conectados a uma plataforma online. O objetivo é proporcionar uma solução escalável e de fácil utilização para operadores, supervisores e montadores da John Deere, permitindo o acompanhamento em tempo real de veículos de transporte e a comunicação entre responsáveis.
 
 ---
 
-## Objetivos
+## 🎯 Objetivos
 
 - **Automatizar** a coleta e entrega de kits usando dispositivos conectados à internet.
 - **Localizar em tempo real** os operadores e veículos (carrinhos) envolvidos na movimentação dos kits.
@@ -15,7 +30,7 @@ O projeto **JDUBER** foi desenvolvido como parte de uma iniciativa para melhorar
 
 ---
 
-## Desenvolvimento
+## ⚙️ Desenvolvimento
 
 ### Arquitetura
 
@@ -31,13 +46,12 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 - **Banco de Dados (MongoDB)**: Armazena as coordenadas e informações dos operadores e kits.
 
 **Tecnologias Utilizadas**:
-- **ESP32**: Microcontrolador para comunicação IoT.
-- **Hostinger**: Hospedagem do site e backend PHP.
-- **MongoDB**: Banco de dados para as informações dos dispositivos ESP32.
-- **PHP**: Backend para processar as requisições do ESP32 e gerenciar a lógica do sistema.
-- **JavaScript**: Interação dos usuários com o sistema.
-- **HTML/CSS**: Estrutura e estilo das páginas web.
-- **SMTP (Hostinger)**: Envio de e-mails para recuperação de senha.
+- ![ESP32 Icon](https://img.icons8.com/color/48/000000/microcontroller.png) **ESP32**: Microcontrolador para comunicação IoT.
+- ![Hostinger Icon](https://img.icons8.com/color/48/000000/cloud.png) **Hostinger**: Hospedagem do site e backend PHP.
+- ![MongoDB Icon](https://img.icons8.com/color/48/000000/mongodb.png) **MongoDB**: Banco de dados para as informações dos dispositivos ESP32.
+- ![PHP Icon](https://img.icons8.com/color/48/000000/php.png) **PHP**: Backend para processar as requisições do ESP32 e gerenciar a lógica do sistema.
+- ![JavaScript Icon](https://img.icons8.com/color/48/000000/javascript.png) **JavaScript**: Interação dos usuários com o sistema.
+- ![HTML Icon](https://img.icons8.com/color/48/000000/html.png) **HTML/CSS**: Estrutura e estilo das páginas web.
 
 ### Diagrama de Blocos da Arquitetura
 
@@ -45,7 +59,13 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 
 ---
 
-## Páginas e Funcionalidades
+## 🔍 Páginas e Funcionalidades
+
+| Usuário    | Funcionalidade Principal                       | Descrição                                                                                  |
+|------------|-----------------------------------------------|--------------------------------------------------------------------------------------------|
+| **Montador** | Solicitação de kits                           | Solicita kits para os operadores, que realizam as entregas                                 |
+| **Operador** | Receber solicitações e monitoramento de kits | Recebe solicitações dos montadores e movimenta os kits, com a localização atualizada no mapa |
+| **Supervisor** | Visão geral do fluxo de trabalho             | Visualiza em tempo real as localizações dos operadores e kits em toda a planta             |
 
 - **Login e Registro**: Autenticação robusta com controle de acesso baseado em funções (Supervisor, Operador, Montador).
 - **Mapa Interativo**: Atualização em tempo real da localização de operadores e kits, com visão global para supervisores.
@@ -54,7 +74,7 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 
 ---
 
-## Imagens do Projeto
+## 🖼️ Imagens do Projeto
 
 ### Capturas de Tela do Projeto
 
@@ -63,15 +83,6 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 | ![Captura_de_tela_2024-09-30_084109](https://github.com/user-attachments/assets/ee61cfea-d762-4453-a948-21f67677a715) |
 | ![Captura_de_tela_2024-09-30_083948](https://github.com/user-attachments/assets/1b441dbe-8113-4d9c-956b-596eabe44a14) |
 | ![Captura_de_tela_2024-09-30_083852](https://github.com/user-attachments/assets/ac5a0dba-8147-4be9-8d94-2025bb5239a6) |
-| ![Captura_de_tela_2024-09-30_082718](https://github.com/user-attachments/assets/3d7e6e2f-a876-4cdd-a26d-b0b353c24236) |
-| ![Captura_de_tela_2024-09-30_082700](https://github.com/user-attachments/assets/d7d21742-3498-40fe-8f57-6bb430c5e512) |
-| ![Captura_de_tela_2024-09-30_082640](https://github.com/user-attachments/assets/c7e65916-e750-4aff-b0f7-af49484d7bc6) |
-| ![Captura_de_tela_2024-09-30_082619](https://github.com/user-attachments/assets/811448fc-55ae-471c-afff-1173e9f34043) |
-| ![Captura_de_tela_2024-09-30_082541](https://github.com/user-attachments/assets/3204694e-ba27-4b4c-8834-6eff3c70586f) |
-| ![Captura_de_tela_2024-09-30_082523](https://github.com/user-attachments/assets/bddd4290-ffbd-48b4-9664-e8f26e8bb82d) |
-| ![Captura_de_tela_2024-09-30_082458](https://github.com/user-attachments/assets/288b2461-c153-460f-9c9a-f223a40f228b) |
-| ![Captura_de_tela_2024-09-30_082443](https://github.com/user-attachments/assets/91a32411-684a-4c8b-b4d8-f341374c71a7) |
-| ![Captura_de_tela_2024-09-30_082422](https://github.com/user-attachments/assets/7c369ec1-af29-4395-9a5f-918deedb882d) |
 
 ### Tela do Protótipo ESP32 e Banco de Dados
 
@@ -83,13 +94,13 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 
 ---
 
-## Design
+## 🎨 Design
 
 O projeto JDUBER adota um design minimalista inspirado nas cores da **Uber**, com um esquema de cores preto e branco que reflete simplicidade e elegância. A interface é **responsiva**, garantindo uma experiência agradável em desktops e dispositivos móveis.
 
 ---
 
-## Resultados
+## 📈 Resultados
 
 Os principais resultados até o momento incluem:
 
@@ -99,7 +110,7 @@ Os principais resultados até o momento incluem:
 
 ---
 
-## Código Fonte
+## 💻 Código Fonte
 
 O código-fonte completo do projeto está na pasta `/public_html` e inclui:
 
@@ -108,13 +119,13 @@ O código-fonte completo do projeto está na pasta `/public_html` e inclui:
 
 ---
 
-## Vídeo de Demonstração
+## 🎬 Vídeo de Demonstração
 
 Assista à [demonstração do projeto no YouTube](https://www.youtube.com/watch?v=jGpozfe2yeo).
 
 ---
 
-## Testes de Desempenho
+## 🧪 Testes de Desempenho
 
 Nesta seção, realizamos testes para avaliar a qualidade do projeto JDUBER e identificar oportunidades de melhoria com base no feedback da John Deere. O teste selecionado foi focado na precisão da localização via triangulação WiFi com ESP32.
 
@@ -145,7 +156,7 @@ Para aprimorar o desempenho e aumentar a durabilidade dos dispositivos, algumas 
 
 ---
 
-## Conclusão
+## 📚 Conclusão
 
 JDUBER é um passo importante na aplicação da Indústria 4.0 na John Deere. Com a automação da logística interna e o uso de IoT, esperamos melhorar a eficiência das operações, além de facilitar o trabalho dos operadores, montadores e supervisores.
 
