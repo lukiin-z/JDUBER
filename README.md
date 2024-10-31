@@ -78,7 +78,6 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 | Protótipo ESP32 e Banco de Dados |
 | --- |
 | ![Captura_de_tela_2024-09-30_090436](https://github.com/user-attachments/assets/c09d51c3-e9f1-408a-a003-3af42fc74e93) |
-| ![Captura_de_tela_2024-09-30_090348](https://github.com/user-attachments/assets/d83731db-19d0-4838-b79e-01552f40d893) |
 | ![Captura_de_tela_2024-09-30_085904](https://github.com/user-attachments/assets/4382f03e-7a11-4532-8e0a-60fe8942b7b7) |
 | ![Captura_de_tela_2024-09-30_085521](https://github.com/user-attachments/assets/e453e0ac-7a9e-4e20-a1e3-ce613214bdb6) |
 
@@ -117,34 +116,32 @@ Assista à [demonstração do projeto no YouTube](https://www.youtube.com/watch?
 
 ## Testes de Desempenho
 
-Nesta seção, realizamos testes para avaliar a qualidade do projeto JDUBER e identificar oportunidades de melhoria com base no feedback da John Deere. Os testes selecionados focam em aspectos importantes para o uso de triangulação de sinal WiFi com ESP32.
+Nesta seção, realizamos testes para avaliar a qualidade do projeto JDUBER e identificar oportunidades de melhoria com base no feedback da John Deere. O teste selecionado foi focado na precisão da localização via triangulação WiFi com ESP32.
 
 ### Definição da Ferramenta de Teste
 
-Utilizamos uma ferramenta de análise de sinal WiFi e monitoramento de consumo de energia para realizar os testes:
+Utilizamos uma ferramenta de análise de sinal WiFi para avaliar a precisão da localização fornecida pela triangulação.
 
-- **Teste de Precisão de Localização**: Avalia a precisão da localização fornecida pela triangulação do sinal WiFi.
-- **Teste de Consumo de Energia**: Mede o consumo de energia dos dispositivos ESP32 durante a operação contínua.
+- **Teste de Precisão de Localização**: Avalia a precisão da localização dos ativos com base no sinal WiFi, verificando o erro médio de localização em um ambiente de fábrica.
 
 ### Evidências de Testes
 
-Aqui estão algumas capturas de tela dos resultados obtidos durante os testes.
+Abaixo, uma captura de tela dos resultados obtidos durante o teste de precisão de localização.
 
-| Teste de Precisão de Localização | Teste de Consumo de Energia |
-| --- | --- |
-| ![Captura Teste Precisão](https://github.com/user-attachments/assets/example-test-location.png) | ![Captura Teste Consumo](https://github.com/user-attachments/assets/example-test-energy.png) |
+| Teste de Precisão de Localização |
+| --- |
+| ![Captura Teste Precisão](https://github.com/user-attachments/assets/d83731db-19d0-4838-b79e-01552f40d893) |
 
 ### Discussão dos Resultados
 
 - **Teste de Precisão de Localização**: Os resultados mostraram uma precisão satisfatória para ambientes internos, com erro médio de até 1,5 metros. Este nível de precisão é adequado para o monitoramento de kits e operadores na planta.
-- **Teste de Consumo de Energia**: O consumo de energia foi moderado, mantendo os dispositivos ativos por cerca de 8 horas em operação contínua, o que pode ser melhorado para períodos mais longos.
 
 ### Soluções Futuras
 
 Para aprimorar o desempenho e aumentar a durabilidade dos dispositivos, algumas melhorias futuras poderiam incluir:
 
 - **Aprimorar a Precisão**: Implementar algoritmos de filtragem para refinar ainda mais a precisão da localização.
-- **Otimização de Energia**: Estudar a viabilidade de modos de economia de energia para prolongar a vida útil da bateria dos ESP32.
+- **Otimização de Energia**: Considerar modos de economia de energia para prolongar a vida útil da bateria dos ESP32.
 
 ---
 
@@ -156,4 +153,3 @@ JDUBER é um passo importante na aplicação da Indústria 4.0 na John Deere. Co
 
 > **Desenvolvido por**: Lucas Baraldi e Lucas Zolla  
 > **Projeto para**: John Deere
-
