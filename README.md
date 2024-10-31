@@ -1,17 +1,23 @@
 # JDUBER
 
 ## Sumário
-- [Introdução](#introdução)
-- [Objetivos](#objetivos)
-- [Desenvolvimento](#desenvolvimento)
-- [Páginas e Funcionalidades](#páginas-e-funcionalidades)
-- [Imagens do Projeto](#imagens-do-projeto)
-- [Design](#design)
-- [Resultados](#resultados)
-- [Código Fonte](#código-fonte)
-- [Vídeo de Demonstração](#vídeo-de-demonstração)
-- [Testes de Desempenho](#testes-de-desempenho)
-- [Conclusão](#conclusão)
+- [Introdução](#-introdução)
+- [Objetivos](#-objetivos)
+- [Desenvolvimento](#-desenvolvimento)
+  - [Arquitetura](#arquitetura)
+  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Páginas e Funcionalidades](#-páginas-e-funcionalidades)
+- [Imagens do Projeto](#-imagens-do-projeto)
+- [Design](#-design)
+- [Resultados](#-resultados)
+- [Código Fonte](#-código-fonte)
+- [Vídeo de Demonstração](#-vídeo-de-demonstração)
+- [Testes de Desempenho](#-testes-de-desempenho)
+  - [Definição da Ferramenta de Teste](#definição-da-ferramenta-de-teste)
+  - [Evidências de Testes](#evidências-de-testes)
+  - [Discussão dos Resultados](#discussão-dos-resultados)
+  - [Soluções Futuras](#soluções-futuras)
+- [Conclusão](#-conclusão)
 
 ---
 
@@ -45,8 +51,9 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
   - **Supervisor**: Visualiza em tempo real a localização de operadores e kits, monitorando o fluxo operacional.
 - **Banco de Dados (MongoDB)**: Armazena as coordenadas e informações dos operadores e kits.
 
-**Tecnologias Utilizadas**:
-- ![ESP32 Icon](https://img.icons8.com/color/48/000000/microcontroller.png) **ESP32**: Microcontrolador para comunicação IoT.
+### Tecnologias Utilizadas
+
+- ![ESP32 Icon](https://img.icons8.com/external-filled-outline-geotatah/48/000000/external-esp32-electronic-components-filled-outline-geotatah.png) **ESP32**: Microcontrolador para comunicação IoT.
 - ![Hostinger Icon](https://img.icons8.com/color/48/000000/cloud.png) **Hostinger**: Hospedagem do site e backend PHP.
 - ![MongoDB Icon](https://img.icons8.com/color/48/000000/mongodb.png) **MongoDB**: Banco de dados para as informações dos dispositivos ESP32.
 - ![PHP Icon](https://img.icons8.com/color/48/000000/php.png) **PHP**: Backend para processar as requisições do ESP32 e gerenciar a lógica do sistema.
