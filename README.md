@@ -115,6 +115,39 @@ Assista à [demonstração do projeto no YouTube](https://www.youtube.com/watch?
 
 ---
 
+## Testes de Desempenho
+
+Nesta seção, realizamos testes para avaliar a qualidade do projeto JDUBER e identificar oportunidades de melhoria com base no feedback da John Deere. Os testes selecionados focam em aspectos importantes para o uso de triangulação de sinal WiFi com ESP32.
+
+### Definição da Ferramenta de Teste
+
+Utilizamos uma ferramenta de análise de sinal WiFi e monitoramento de consumo de energia para realizar os testes:
+
+- **Teste de Precisão de Localização**: Avalia a precisão da localização fornecida pela triangulação do sinal WiFi.
+- **Teste de Consumo de Energia**: Mede o consumo de energia dos dispositivos ESP32 durante a operação contínua.
+
+### Evidências de Testes
+
+Aqui estão algumas capturas de tela dos resultados obtidos durante os testes.
+
+| Teste de Precisão de Localização | Teste de Consumo de Energia |
+| --- | --- |
+| ![Captura Teste Precisão](https://github.com/user-attachments/assets/example-test-location.png) | ![Captura Teste Consumo](https://github.com/user-attachments/assets/example-test-energy.png) |
+
+### Discussão dos Resultados
+
+- **Teste de Precisão de Localização**: Os resultados mostraram uma precisão satisfatória para ambientes internos, com erro médio de até 1,5 metros. Este nível de precisão é adequado para o monitoramento de kits e operadores na planta.
+- **Teste de Consumo de Energia**: O consumo de energia foi moderado, mantendo os dispositivos ativos por cerca de 8 horas em operação contínua, o que pode ser melhorado para períodos mais longos.
+
+### Soluções Futuras
+
+Para aprimorar o desempenho e aumentar a durabilidade dos dispositivos, algumas melhorias futuras poderiam incluir:
+
+- **Aprimorar a Precisão**: Implementar algoritmos de filtragem para refinar ainda mais a precisão da localização.
+- **Otimização de Energia**: Estudar a viabilidade de modos de economia de energia para prolongar a vida útil da bateria dos ESP32.
+
+---
+
 ## Conclusão
 
 JDUBER é um passo importante na aplicação da Indústria 4.0 na John Deere. Com a automação da logística interna e o uso de IoT, esperamos melhorar a eficiência das operações, além de facilitar o trabalho dos operadores, montadores e supervisores.
@@ -123,3 +156,4 @@ JDUBER é um passo importante na aplicação da Indústria 4.0 na John Deere. Co
 
 > **Desenvolvido por**: Lucas Baraldi e Lucas Zolla  
 > **Projeto para**: John Deere
+
