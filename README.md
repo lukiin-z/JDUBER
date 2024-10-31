@@ -144,9 +144,9 @@ Utilizamos uma ferramenta de análise de sinal WiFi para avaliar a precisão da 
 
 ### Evidências de Testes
 
-Abaixo, uma captura de tela dos resultados obtidos durante o teste de precisão de localização.
+Abaixo, uma captura de tela dos resultados obtidos durante o teste de precisão de localização e do teste de tempo de resposta.
 
-| Teste de Precisão de Localização |
+| Teste de Precisão de Localização e tempo de resposta |
 | --- |
 | ![Captura Teste Precisão](https://github.com/user-attachments/assets/d83731db-19d0-4838-b79e-01552f40d893) |
 
