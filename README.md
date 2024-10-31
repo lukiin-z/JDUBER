@@ -53,7 +53,7 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 
 ### Tecnologias Utilizadas
 
-- ![ESP32 Icon](https://camo.githubusercontent.com/f137356d574a779342fe335937f7d6d0cb1766f0a18e3e34eddeba6b6bfe356e/68747470733a2f2f7062732e7477696d672e636f6d2f70726f66696c655f696d616765732f3836333531303430333132303232323230382f726a564f695465332e6a7067) **ESP32**: Microcontrolador para comunicação IoT.
+- ![ESP32 Icon](https://img.icons8.com/color/48/000000/circuit.png) **ESP32**: Microcontrolador para comunicação IoT.
 - ![Hostinger Icon](https://img.icons8.com/color/48/000000/cloud.png) **Hostinger**: Hospedagem do site e backend PHP.
 - ![MongoDB Icon](https://img.icons8.com/color/48/000000/mongodb.png) **MongoDB**: Banco de dados para as informações dos dispositivos ESP32.
 - ![PHP Icon](https://img.icons8.com/color/48/000000/php.png) **PHP**: Backend para processar as requisições do ESP32 e gerenciar a lógica do sistema.
