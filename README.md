@@ -75,7 +75,7 @@ A solução JDUBER é composta por uma arquitetura de IoT que integra dispositiv
 
 ### Tela do Protótipo ESP32 e Banco de Dados
 
-| Protótipo ESP32 |
+| Protótipo ESP32 e Banco de Dados |
 | --- |
 | ![Captura_de_tela_2024-09-30_090436](https://github.com/user-attachments/assets/c09d51c3-e9f1-408a-a003-3af42fc74e93) |
 | ![Captura_de_tela_2024-09-30_090348](https://github.com/user-attachments/assets/d83731db-19d0-4838-b79e-01552f40d893) |
